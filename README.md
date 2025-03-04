@@ -153,7 +153,7 @@ SELECT LENGTH(cadena) FROM tabla;  -- Longitud de la cadena
 
 
 
-## 7. Funciones de Ventana (Window Functions)
+## 7. Funciones de ventana (Window Functions)
 ### ROW_NUMBER() (asigna un número único a cada fila dentro de una partición):
 ```sql
 SELECT columna, 
@@ -178,7 +178,7 @@ SELECT columna,
        NTILE(4) OVER (ORDER BY columna2) AS quartile
 FROM tabla;
 ```
-## 8. Operaciones Avanzadas
+## 8. Operaciones avanzadas
 ### Union (combina resultados de dos consultas):
 ```sql
 SELECT columna1 FROM tabla1
@@ -197,7 +197,7 @@ SELECT columna1 FROM tabla1
 EXCEPT
 SELECT columna1 FROM tabla2;
 ```
-## 9. Modificaciones de Datos
+## 9. Modificaciones de datos
 ### Insertar datos:
 ```sql
 INSERT INTO tabla (columna1, columna2)
@@ -257,7 +257,7 @@ DROP VIEW vista_nombre;
 ```
 
 
-## 13. Seguridad y Control de Accesos
+## 13. Seguridad y control de accesos
 ### Crear usuario:
 ```sql
 CREATE USER 'usuario'@'localhost' IDENTIFIED BY 'contraseña';
@@ -276,7 +276,7 @@ DROP USER 'usuario'@'localhost';
 ```
 
 
-## 14. Optimización y Plan de Ejecución
+## 14. Optimización y plan de ejecución
 ### EXPLAIN (ver el plan de ejecución de una consulta):
 ```sql
 EXPLAIN SELECT * FROM tabla WHERE columna = valor;
@@ -288,7 +288,7 @@ Considerar el uso de particiones para grandes conjuntos de datos.
 
 
 
-## 15. Subconsultas Avanzadas
+## 15. Subconsultas avanzadas
 
 ### Subconsulta correlacionada (se refiere a columnas de la consulta externa):
 ```sql
@@ -321,7 +321,7 @@ END;
 ```sql
 SELECT funcion_nombre(5);  -- Llamada a la función
 ```
-## 18. Procedimientos Almacenados
+## 18. Procedimientos almacenados
 Conjunto de instrucciones SQL predefinidas que se pueden almacenar y ejecutar en la base de datos.
 ### Crear un procedimiento almacenado:
 
