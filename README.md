@@ -8,14 +8,14 @@ SELECT columna1, columna2
 FROM tabla;
 ```
 
-## Select con WHERE:
+### Select con WHERE:
 ```sql
 SELECT columna1, columna2
 FROM tabla
 WHERE condicion;
 ```
 
-###Joins:
+### Joins:
 #### INNER JOIN (solo registros coincidentes):
 ```sql
 SELECT t1.columna1, t2.columna2
