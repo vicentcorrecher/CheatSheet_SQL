@@ -55,7 +55,28 @@ SELECT columna1,
        (SELECT MAX(columna2) FROM tabla2) AS max_columna2
 FROM tabla1;
 ```
-## 3. Funciones de Agregación
+
+## 3. Operadores adicionales
+
+### IN (para verificar varios valores):
+
+```sql
+SELECT columna1 FROM tabla WHERE columna1 IN (valor1, valor2, valor3);
+```
+### BETWEEN (rango de valores):
+
+```sql
+SELECT columna1 FROM tabla WHERE columna2 BETWEEN valor1 AND valor2;
+```
+### LIKE (coincidencia de patrones):
+
+```sql
+SELECT columna1 FROM tabla WHERE columna2 LIKE 'A%';  -- Comienza con 'A'
+SELECT columna1 FROM tabla WHERE columna2 LIKE '%ABC';  -- Termina con 'ABC'
+SELECT columna1 FROM tabla WHERE columna2 LIKE '%123%';  -- Contiene '123'
+```
+
+## 4. Funciones de agregación
 ### COUNT:
 ```sql
 SELECT COUNT(*) FROM tabla;
@@ -86,7 +107,53 @@ GROUP BY columna
 HAVING COUNT(*) > 5;
 ```
 
-## 4. Funciones de Ventana (Window Functions)
+
+## 5. Consultas de fechas y horas
+
+### Fecha y hora actual:
+
+```sql
+SELECT CURRENT_DATE;  -- Fecha actual
+SELECT CURRENT_TIME;  -- Hora actual
+SELECT CURRENT_TIMESTAMP;  -- Fecha y hora actual
+```
+### Funciones de fecha:
+
+```sql
+SELECT DATE_ADD(fecha, INTERVAL 1 DAY) FROM tabla;  -- Sumar un día a la fecha
+SELECT DATE_SUB(fecha, INTERVAL 1 MONTH) FROM tabla;  -- Restar un mes a la fecha
+SELECT YEAR(fecha) FROM tabla;  -- Extraer el año de una fecha
+SELECT MONTH(fecha) FROM tabla;  -- Extraer el mes de una fecha
+SELECT DAY(fecha) FROM tabla;  -- Extraer el día de una fecha
+```
+### Formato de Fechas:
+
+```sql
+SELECT DATE_FORMAT(fecha, '%Y-%m-%d') FROM tabla;  -- Formato personalizado
+```
+
+## 6. Manipulación de cadenas de texto
+
+### Concatenar cadenas:
+
+```sql
+SELECT CONCAT(cadena1, cadena2) FROM tabla;  -- Une dos cadenas
+```
+### Buscar y reemplazar subcadenas:
+
+```sql
+SELECT REPLACE(cadena, 'buscado', 'reemplazo') FROM tabla;  -- Reemplaza una subcadena
+SELECT SUBSTRING(cadena, 1, 5) FROM tabla;  -- Extrae una subcadena
+```
+### Longitud de la cadena:
+
+```sql
+SELECT LENGTH(cadena) FROM tabla;  -- Longitud de la cadena
+```
+
+
+
+## 7. Funciones de Ventana (Window Functions)
 ### ROW_NUMBER() (asigna un número único a cada fila dentro de una partición):
 ```sql
 SELECT columna, 
@@ -111,7 +178,7 @@ SELECT columna,
        NTILE(4) OVER (ORDER BY columna2) AS quartile
 FROM tabla;
 ```
-## 5. Operaciones Avanzadas
+## 8. Operaciones Avanzadas
 ### Union (combina resultados de dos consultas):
 ```sql
 SELECT columna1 FROM tabla1
@@ -130,7 +197,7 @@ SELECT columna1 FROM tabla1
 EXCEPT
 SELECT columna1 FROM tabla2;
 ```
-## 6. Modificaciones de Datos
+## 9. Modificaciones de Datos
 ### Insertar datos:
 ```sql
 INSERT INTO tabla (columna1, columna2)
@@ -147,7 +214,20 @@ WHERE columna2 = valor2;
 DELETE FROM tabla
 WHERE condicion;
 ```
-## 7. Transacciones
+
+## 10. Índices
+### Crear un índice:
+```sql
+CREATE INDEX index_name
+ON tabla (columna);
+```
+### Eliminar un índice:
+```sql
+DROP INDEX index_name;
+```
+
+
+## 11. Transacciones
 ### Iniciar una transacción:
 ```sql
 BEGIN TRANSACTION;
@@ -160,26 +240,24 @@ COMMIT;
 ```sql
 ROLLBACK;
 ```
-## 8. Índices
-### Crear un índice:
-```sql
-CREATE INDEX index_name
-ON tabla (columna);
-```
-### Eliminar un índice:
-```sql
-DROP INDEX index_name;
-```
-## 9. Optimización y Plan de Ejecución
-### EXPLAIN (ver el plan de ejecución de una consulta):
-```sql
-EXPLAIN SELECT * FROM tabla WHERE columna = valor;
-```
-Uso de índices para mejorar la velocidad de las consultas.
-Evitar SELECT * (seleccionar solo las columnas necesarias).
-Considerar el uso de particiones para grandes conjuntos de datos.
 
-## 10. Seguridad y Control de Accesos
+## 12. Vistas (Views)
+
+### Crear una Vista:
+
+```sql
+CREATE VIEW vista_nombre AS
+SELECT columna1, columna2
+FROM tabla
+WHERE columna3 = 'valor';
+```
+### Eliminar una Vista:
+```sql
+DROP VIEW vista_nombre;
+```
+
+
+## 13. Seguridad y Control de Accesos
 ### Crear usuario:
 ```sql
 CREATE USER 'usuario'@'localhost' IDENTIFIED BY 'contraseña';
@@ -188,11 +266,73 @@ CREATE USER 'usuario'@'localhost' IDENTIFIED BY 'contraseña';
 ```sql
 GRANT ALL PRIVILEGES ON base_de_datos.* TO 'usuario'@'localhost';
 ```
-Revocar privilegios:
+### Revocar privilegios:
 ```sql
 REVOKE ALL PRIVILEGES ON base_de_datos.* FROM 'usuario'@'localhost';
 ```
 ### Eliminar usuario:
 ```sql
 DROP USER 'usuario'@'localhost';
+```
+
+
+## 14. Optimización y Plan de Ejecución
+### EXPLAIN (ver el plan de ejecución de una consulta):
+```sql
+EXPLAIN SELECT * FROM tabla WHERE columna = valor;
+```
+Uso de índices para mejorar la velocidad de las consultas.
+Evitar SELECT * (seleccionar solo las columnas necesarias).
+Considerar el uso de particiones para grandes conjuntos de datos.
+
+
+
+
+## 15. Subconsultas Avanzadas
+
+### Subconsulta correlacionada (se refiere a columnas de la consulta externa):
+```sql
+SELECT columna1
+FROM tabla1 t1
+WHERE columna2 > (SELECT AVG(columna2) FROM tabla2 t2 WHERE t2.id = t1.id);
+```
+## 16. Consultas de texto completo
+
+### Búsqueda de texto completo ( OJO: si la base de datos lo soporta):
+```sql
+SELECT columna1
+FROM tabla
+WHERE MATCH(columna1) AGAINST ('texto de búsqueda' IN NATURAL LANGUAGE MODE);
+```
+
+## 17. Funciones definidas por el usuario (UDFs)
+ Función que el usuario puede definir en el sistema de gestión de bases de datos (DBMS).
+ P.ej: Función multiplicar
+### Crear una función:
+
+```sql
+CREATE FUNCTION funcion_nombre(parametro1 INT) RETURNS INT
+BEGIN
+  RETURN parametro1 * 2;
+END;
+```
+### Llamar a una función:
+
+```sql
+SELECT funcion_nombre(5);  -- Llamada a la función
+```
+## 18. Procedimientos Almacenados
+Conjunto de instrucciones SQL predefinidas que se pueden almacenar y ejecutar en la base de datos.
+### Crear un procedimiento almacenado:
+
+```sql
+CREATE PROCEDURE procedimiento_nombre()
+BEGIN
+  -- Lógica del procedimiento
+  SELECT * FROM tabla;
+END;
+```
+### Llamar a un procedimiento almacenado:
+```sql
+CALL procedimiento_nombre();
 ```
